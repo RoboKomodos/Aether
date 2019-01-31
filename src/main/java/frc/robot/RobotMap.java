@@ -15,6 +15,7 @@ package frc.robot;
  */
 public class RobotMap {
   //Drive train
-  public static int RightMotor = 1;
-  public static int LeftMotor = 2;
+  public static int RightVictorMotor = 1;
+  public static int LeftVictorMotor = 2;
+  public static int xboxController;
 }
