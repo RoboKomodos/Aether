@@ -7,7 +7,7 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
@@ -15,18 +15,19 @@ import frc.robot.RobotMap;
  * Add your docs here.
  */
 public class drive extends Subsystem {
-  public static Victor leftVictor = new Victor(RobotMap.LeftVictorMotor);
-  public static Victor rightVictor = new Victor(RobotMap.RightVictorMotor);
+  public static PWMTalonSRX leftVictor = new PWMTalonSRX(RobotMap.LeftVictorMotor);
+  public static PWMTalonSRX rightVictor = new PWMTalonSRX(RobotMap.RightVictorMotor);
   public static void setRightMotor(double speed)
   {
     if (speed > 1)speed =1;
-    else if (speed<1)speed =1;
-    rightVictor.set((double)speed);
+    else if (speed<-1)speed =-1;
+    System.out.println(speed);
+    rightVictor.set(speed);
   }
   public static void setLeftMotor(double speed)
   {
     if (speed > 1)speed =1;
-    else if (speed<1)speed =1;
+    else if (speed<-1)speed =-1;
     leftVictor.set((double)speed);
   }
   public static void arcadeDrive(double x, double y)

@@ -7,6 +7,10 @@
 
 package frc.robot;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
+import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -27,6 +31,7 @@ import frc.robot.subsystems.drive;
 public class Robot extends TimedRobot {
   public static ExampleSubsystem m_subsystem = new ExampleSubsystem();
   public static OI m_oi;
+  public static CANSparkMax s1 = new CANSparkMax(1, MotorType.kBrushless);
 
   Command m_autonomousCommand;
   SendableChooser<Command> m_chooser = new SendableChooser<>();
@@ -123,7 +128,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
     drive.arcadeDrive(OI.xboxController.getRawAxis(1),OI.xboxController.getRawAxis(0) );
-    
+    System.out.println(s1.getEncoder().getPosition());
   }
 
   /**
