@@ -129,6 +129,7 @@ public class Robot extends TimedRobot {
     Scheduler.getInstance().run();
     drive.arcadeDrive(OI.xboxController.getRawAxis(1),OI.xboxController.getRawAxis(0) );
     System.out.println(s1.getEncoder().getPosition());
+    s1.set(.5);
   }
 
   /**
