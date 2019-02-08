@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.PWMTalonSRX;
+import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
 
@@ -15,8 +16,10 @@ import frc.robot.RobotMap;
  * Add your docs here.
  */
 public class drive extends Subsystem {
-  public static PWMTalonSRX leftVictor = new PWMTalonSRX(RobotMap.LeftVictorMotor);
-  public static PWMTalonSRX rightVictor = new PWMTalonSRX(RobotMap.RightVictorMotor);
+  public static Victor leftVictor = new Victor(RobotMap.LeftVictorMotor);
+  public static Victor rightVictor = new Victor(RobotMap.RightVictorMotor);
+ // public static PWMTalonSRX leftTalon = new PWMTalonSRX(RobotMap.LeftTalonMotor);
+ // public static PWMTalonSRX rightTalon = new PWMTalonSRX(RobotMap.RightTalonMotor);
   public static void setRightMotor(double speed)
   {
     if (speed > 1)speed =1;

@@ -17,5 +17,7 @@ public class RobotMap {
   //Drive train
   public static int RightVictorMotor = 1;
   public static int LeftVictorMotor = 2;
-  public static int xboxController;
+  public static int RightTalonMotor = 1;
+  public static int LeftTalonMotor = 2;
+  public static int xboxController = 0;
 }
