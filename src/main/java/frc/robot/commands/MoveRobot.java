@@ -8,11 +8,13 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import frc.robot.Robot;
 
-public class halfSpeed extends Command {
-  public halfSpeed() {
+public class MoveRobot extends Command {
+  public MoveRobot() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
+    requires(Robot.m_drive);
   }
 
   // Called just before this Command runs the first time
@@ -23,6 +25,7 @@ public class halfSpeed extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
+    Robot.m_drive.stickDrive(Robot.m_oi.getDriverStick(), Robot.m_shift.getSolenoid());
   }
 
   // Make this return true when this Command no longer needs to run execute()

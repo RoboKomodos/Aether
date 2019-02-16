@@ -14,10 +14,9 @@ package frc.robot;
  * floating around.
  */
 public class RobotMap {
-  //Drive train
-  public static int RightVictorMotor = 1;
-  public static int LeftVictorMotor = 2;
-  public static int RightTalonMotor = 1;
-  public static int LeftTalonMotor = 2;
+  public static int RightMotor = 1;
+  public static int LeftMotor = 0;
   public static int xboxController = 0;
+  public static int logitech = 1;
+  public static int intakeMotor = 2;
 }
