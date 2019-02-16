@@ -8,75 +8,53 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.PWMSpeedController;
+import edu.wpi.first.wpilibj.Sendable;
+import edu.wpi.first.wpilibj.SendableBase;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import frc.robot.RobotMap;
+import frc.robot.constants;
 import frc.robot.commands.MoveRobot;
 
 /**
  * Add your docs here.
  */
 public class driveSubsystem extends PIDSubsystem {
-  Victor left = new Victor(RobotMap.LeftMotor);
-  Victor right = new Victor(RobotMap.RightMotor);
+  
+  Victor leftDrive;
+  Victor rightDrive;
+  public driveSubsystem() {
+    super("drive", constants.KP, constants.KI, constants.KD);
+    getPIDController().setAbsoluteTolerance(constants.KTolerance);
+    leftDrive = new Victor(RobotMap.LeftMotor);
+    rightDrive = new Victor(RobotMap.RightMotor);
+    
+  }
+
+  public void set(double left,double right)
+  {
+      leftDrive.set(left);
+      rightDrive.set(right);
+  }
+
+  public void arcadeDrive(double x, double y,double percent)
+  {
+    set(percent*(y+x), percent*(x+x));
+  }
+
   @Override
   public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
-
-    // Default is to manually drive robot with sticks
     setDefaultCommand(new MoveRobot());
   }
 
-  public boolean initMotors() {
-    ErrorCode error = ErrorCode.OK;
-
-    /**
-     * Config the allowable closed-loop error, Closed-Loop output will be
-     * neutral within this range. See Table here for units to use: 
-     * https://github.com/CrossTheRoadElec/Phoenix-Documentation#what-are-the-units-of-my-sensor
-     */
-    
-    error = left.configAllowableClosedloopError(0, 0, Constants.kTimeoutMs);
-    if (error == ErrorCode.OK){
-      error = right.configAllowableClosedloopError(0, 0, Constants.kTimeoutMs);
-    }
-
-    /* Config closed loop gains for Primary closed loop (Current) */
-    // TODO: Check error codes
-    leftMaster.config_kP(0, Constants.kP, Constants.kTimeoutMs);
-    leftMaster.config_kI(0, Constants.kI, Constants.kTimeoutMs);
-    leftMaster.config_kD(0, Constants.kD, Constants.kTimeoutMs);
-    leftMaster.config_kF(0, Constants.kF, Constants.kTimeoutMs);
-    
-    rightMaster.config_kP(0, Constants.kP, Constants.kTimeoutMs);
-    rightMaster.config_kI(0, Constants.kI, Constants.kTimeoutMs);
-    rightMaster.config_kD(0, Constants.kD, Constants.kTimeoutMs);
-    rightMaster.config_kF(0, Constants.kF, Constants.kTimeoutMs);
-
-    // Initalizes encoders
-    // TODO: Check error codes
-    leftMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, Constants.kTimeoutMs);
-    rightMaster.configSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0, Constants.kTimeoutMs);
-
-    // Ensures motor output and encoder velocity are prorightional to each other
-    // If they become inverted, set these to true
-    leftMaster.setSensorPhase(false);
-    rightMaster.setSensorPhase(false);
-
-    // Zeroes encoders
-    // TODO: Check error codes
-    leftMaster.setSelectedSensorPosition(0, 0, Constants.kTimeoutMs);
-    rightMaster.setSelectedSensorPosition(0, 0, Constants.kTimeoutMs);
-
-    return (error == ErrorCode.OK);
+  @Override
+  protected double returnPIDInput() {
+    return 0.0;
   }
 
-  /** Drive using two talons and a joystick **/
-  public void stickDrive(Joystick driverStick){
-    double thro = driverStick.getRawAxis(1); //Populate the double thro with the raw axis 1
-    double yaw = driverStick.getRawAxis(2); //Populate the double yaw with the raw axis 2
-    left.set((thro) - yaw); // Drive normally
-    right.set(thro - yaw); // Drive normally
+  @Override
+  protected void usePIDOutput(double output) {
+    set(output, -output);
   }
 }
