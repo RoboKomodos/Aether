@@ -9,13 +9,26 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.PWMTalonSRX;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
 public class clawSubsystem extends Subsystem {
-  PWMTalonSRX wristMotor = new PWMTalonSRX(RobotMap.wristMotor);
+  PWMTalonSRX clawMotor = new PWMTalonSRX(RobotMap.wristMotor);
+  public double speed = .25;
+
+  public clawSubsystem()
+  {
+    SmartDashboard.putNumber("Claw Speed", speed);
+  }
+  
+  public void set(double multiplier)
+  {
+    speed = SmartDashboard.getNumber("Claw Speed", speed);
+    clawMotor.set(speed*multiplier);
+  }
 
   @Override
   public void initDefaultCommand() {

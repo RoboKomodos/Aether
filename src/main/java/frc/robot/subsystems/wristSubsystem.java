@@ -9,13 +9,26 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 /**
  * Add your docs here.
  */
 public class wristSubsystem extends Subsystem {
-  PWMVictorSPX wrist = new PWMVictorSPX(RobotMap.wristMotor);
+  PWMVictorSPX wristMotor = new PWMVictorSPX(RobotMap.wristMotor);
+  public double speed = .25;
+
+  public wristSubsystem()
+  {
+    SmartDashboard.putNumber("Wrist Speed", speed);
+  }
+  
+  public void set(double multiplier)
+  {
+    speed = SmartDashboard.getNumber("Wrist Speed", speed);
+    wristMotor.set(speed*multiplier);
+  }
 
   @Override
   public void initDefaultCommand() {

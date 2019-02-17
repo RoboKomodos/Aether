@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 
 /**
@@ -16,6 +17,18 @@ import frc.robot.RobotMap;
  */
 public class intakeSubsystem extends Subsystem {
   Spark intakeMotor = new Spark(RobotMap.intakeMotor);
+  public double speed = .25;
+
+  public intakeSubsystem()
+  {
+    SmartDashboard.putNumber("Intake Speed", speed);
+  }
+
+  public void set(double multiplier)
+  {
+    speed = SmartDashboard.getNumber("Intake Speed", speed);
+    intakeMotor.set(speed*multiplier);
+  }
 
   @Override
   public void initDefaultCommand() {

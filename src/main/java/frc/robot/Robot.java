@@ -12,8 +12,7 @@ import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.armSubsystem;
-import frc.robot.subsystems.driveSubsystem;
+import frc.robot.subsystems.*;
 public class Robot extends TimedRobot {
   
   public static OI m_oi;
@@ -22,6 +21,9 @@ public class Robot extends TimedRobot {
   SendableChooser<Command> m_chooser = new SendableChooser<>();
   public static driveSubsystem m_drive;
   public static armSubsystem m_arm;
+  public static wristSubsystem m_wrist;
+  public static intakeSubsystem m_intake;
+  public static clawSubsystem m_claw;
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
@@ -31,6 +33,9 @@ public class Robot extends TimedRobot {
     m_oi = new OI();
     m_arm = new armSubsystem();
     m_drive = new driveSubsystem();
+    m_wrist = new wristSubsystem();
+    m_claw = new clawSubsystem();
+    m_intake = new intakeSubsystem();
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
     SmartDashboard.putData("Drive PID",m_drive.getPIDController());
@@ -125,6 +130,8 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     Scheduler.getInstance().run();
+    m_oi.periodic();
+    m_claw.set(m_oi.isXboxButtonPressed(xboxMap.lb)?1:m_oi.isXboxButtonPressed(xboxMap.rb)?-1:0);
   }
 
   /**

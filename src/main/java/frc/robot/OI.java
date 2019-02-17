@@ -8,6 +8,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * This class is the glue that binds the controls on the physical operator
@@ -18,6 +19,16 @@ public class OI {
   Joystick logitechController = new Joystick(RobotMap.logitech);
   public double xboxDeadzone = .1;
   public double logitechDeadZone = .5;
+  public OI()
+  {
+    SmartDashboard.putNumber("Xbox Dead Zone", xboxDeadzone);
+    SmartDashboard.putNumber("Logitech Dead Zone", logitechDeadZone);
+  }
+  public void periodic()
+  {
+    xboxDeadzone = SmartDashboard.getNumber("Xbox Dead Zone", xboxDeadzone);
+    logitechDeadZone = SmartDashboard.getNumber("Logitech Dead Zone", logitechDeadZone);
+  }
   //funtions for getting xbox values
   public double getXboxLeftY()
   {
@@ -31,11 +42,15 @@ public class OI {
   }
   public boolean isXboxLTPressed()
   {
-    return xboxController.getRawAxis(3)>.75;
+    return xboxController.getRawAxis(2)>.75;
   }
   public boolean isXboxRTPressed()
   {
-    return xboxController.getRawAxis(3)<-.75;
+    return xboxController.getRawAxis(3)>.75;
+  }
+  public boolean isXboxButtonPressed(xboxMap x)
+  {
+    return xboxController.getRawButton(x.value);
   }
   //funtions for getting logitech values
   public double getLogitechLeftY()
