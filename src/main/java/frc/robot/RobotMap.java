@@ -15,11 +15,13 @@ package frc.robot;
  */
 public class RobotMap {
   //PWM motors
-  public static int RightMotor = 1;
-  public static int LeftMotor = 0;
-  public static int intakeMotor = 2;
+  public static int RightMotor = 1;//victor and talon
+  public static int LeftMotor = 0;//talon and victor
+  public static int intakeMotor = 2;//sparks
+  public static int clawMotor = 4;//talon srx
+  public static int wristMotor = 3;//victor spx
   //CAN motors
-  public static int armMotor = 0;
+  public static int armMotor = 0;//spark max
   //joysticks
   public static int xboxController = 0;
   public static int logitech = 1;

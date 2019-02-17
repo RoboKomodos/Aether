@@ -7,7 +7,6 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -16,9 +15,7 @@ import frc.robot.RobotMap;
 import frc.robot.constants;
 import frc.robot.commands.moveArm;
 
-/**
- * Add your docs here.
- */
+
 public class armSubsystem extends PIDSubsystem {
   CANSparkMax armMotor;
   public armSubsystem() {
@@ -38,10 +35,7 @@ public class armSubsystem extends PIDSubsystem {
 
   @Override
   protected double returnPIDInput() {
-    // Return your input value for the PID loop
-    // e.g. a sensor, like a potentiometer:
-    // yourPot.getAverageVoltage() / kYourMaxVoltage;
-    return 0.0;
+    return armMotor.getEncoder().getPosition();
   }
 
   @Override

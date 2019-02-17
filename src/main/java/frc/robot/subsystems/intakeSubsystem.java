@@ -5,16 +5,21 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot;
-public class constants {
-    //k are the drive constants
-    public static double KP = 0;
-    public static double KI = 0;
-    public static double KD = 0;
-    public static double KTolerance = 2;
-    //A are arm constants
-    public static double AP = 0;
-    public static double AI = 0;
-    public static double AD = 0;
-    public static double ATolerance = 2;
+package frc.robot.subsystems;
+
+import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.RobotMap;
+
+/**
+ * Add your docs here.
+ */
+public class intakeSubsystem extends Subsystem {
+  Spark intakeMotor = new Spark(RobotMap.intakeMotor);
+
+  @Override
+  public void initDefaultCommand() {
+    // Set the default command for a subsystem here.
+    // setDefaultCommand(new MySpecialCommand());
+  }
 }

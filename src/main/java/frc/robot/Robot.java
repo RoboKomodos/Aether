@@ -33,6 +33,17 @@ public class Robot extends TimedRobot {
     m_drive = new driveSubsystem();
     // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
+    SmartDashboard.putData("Drive PID",m_drive.getPIDController());
+    /*SmartDashboard.putNumber("KP", constants.KP);
+    SmartDashboard.putNumber("KI", constants.KI);
+    SmartDashboard.putNumber("KD", constants.KD);
+    SmartDashboard.putNumber("KTolerance", constants.KTolerance);
+    SmartDashboard.putNumber("AP", constants.AP);
+    SmartDashboard.putNumber("AI", constants.AI);
+    SmartDashboard.putNumber("AD", constants.AD);
+    SmartDashboard.putNumber("ATolerance", constants.ATolerance);
+    SmartDashboard.putNumber("xbox deadzone", m_oi.xboxDeadzone);
+    SmartDashboard.putNumber("logitech deadzone", m_oi.logitechDeadZone);*/
   }
 
   /**

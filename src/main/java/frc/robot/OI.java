@@ -16,8 +16,8 @@ import edu.wpi.first.wpilibj.Joystick;
 public class OI {
   Joystick xboxController = new Joystick(RobotMap.xboxController);
   Joystick logitechController = new Joystick(RobotMap.logitech);
-  double xboxDeadzone = .1;
-  double logitechDeadZone = .5;
+  public double xboxDeadzone = .1;
+  public double logitechDeadZone = .5;
   //funtions for getting xbox values
   public double getXboxLeftY()
   {
