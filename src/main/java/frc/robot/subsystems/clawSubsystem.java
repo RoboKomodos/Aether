@@ -7,7 +7,9 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.PWMTalonSRX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
@@ -16,7 +18,7 @@ import frc.robot.RobotMap;
  * Add your docs here.
  */
 public class clawSubsystem extends Subsystem {
-  PWMTalonSRX clawMotor = new PWMTalonSRX(RobotMap.wristMotor);
+  TalonSRX clawMotor = new TalonSRX(RobotMap.wristMotor);
   public double speed = .25;
 
   public clawSubsystem()
@@ -27,7 +29,7 @@ public class clawSubsystem extends Subsystem {
   public void set(double multiplier)
   {
     speed = SmartDashboard.getNumber("Claw Speed", speed);
-    clawMotor.set(speed*multiplier);
+    clawMotor.set(ControlMode.PercentOutput,speed*multiplier);
   }
 
   @Override

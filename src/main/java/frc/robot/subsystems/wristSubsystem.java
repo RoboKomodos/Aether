@@ -7,7 +7,9 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.PWMVictorSPX;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
+
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
@@ -16,7 +18,7 @@ import frc.robot.RobotMap;
  * Add your docs here.
  */
 public class wristSubsystem extends Subsystem {
-  PWMVictorSPX wristMotor = new PWMVictorSPX(RobotMap.wristMotor);
+  VictorSPX wristMotor = new VictorSPX(RobotMap.wristMotor);
   public double speed = .25;
 
   public wristSubsystem()
@@ -27,7 +29,7 @@ public class wristSubsystem extends Subsystem {
   public void set(double multiplier)
   {
     speed = SmartDashboard.getNumber("Wrist Speed", speed);
-    wristMotor.set(speed*multiplier);
+    wristMotor.set(ControlMode.PercentOutput,speed*multiplier);
   }
 
   @Override
