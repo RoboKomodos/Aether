@@ -18,7 +18,7 @@ public class OI {
   Joystick xboxController = new Joystick(RobotMap.xboxController);
   Joystick logitechController = new Joystick(RobotMap.logitech);
   public double xboxDeadzone = .1;
-  public double logitechDeadZone = .5;
+  public double logitechDeadZone = .1;
   public OI()
   {
     SmartDashboard.putNumber("Xbox Dead Zone", xboxDeadzone);
@@ -32,12 +32,12 @@ public class OI {
   //funtions for getting xbox values
   public double getXboxLeftY()
   {
-    double raw = xboxController.getRawAxis(2);
+    double raw = xboxController.getRawAxis(1);
     return Math.abs(raw)<xboxDeadzone ? 0:raw;
   }
   public double getXboxLeftX()
   {
-    double raw = xboxController.getRawAxis(1);
+    double raw = xboxController.getRawAxis(2);
     return Math.abs(raw)<xboxDeadzone ? 0:raw;
   }
   public boolean isXboxLTPressed()
@@ -55,12 +55,7 @@ public class OI {
   //funtions for getting logitech values
   public double getLogitechLeftY()
   {
-    double raw = xboxController.getRawAxis(2);
-    return Math.abs(raw)<logitechDeadZone ? 0:raw;
-  }
-  public double getLogitechLeftX()
-  {
-    double raw = xboxController.getRawAxis(1);
+    double raw = logitechController.getRawAxis(1);
     return Math.abs(raw)<logitechDeadZone ? 0:raw;
   }
 }

@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import java.io.Console;
+
 import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
@@ -22,11 +24,17 @@ public class armSubsystem extends PIDSubsystem {
   public armSubsystem() {
     super("arm", constants.AP, constants.AI, constants.AD);
     armMotor = new CANSparkMax(RobotMap.armMotor, MotorType.kBrushless);
+
   }
 
   public void set(double speed)
   {
+    if(Math.abs(speed) <.1)
+    {
+      speed = -.1;
+    }
     armMotor.set(speed);
+    System.out.println(armMotor.getEncoder().getPosition());
   }
 
   @Override

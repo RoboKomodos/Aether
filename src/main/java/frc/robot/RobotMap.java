@@ -18,10 +18,10 @@ public class RobotMap {
   public static int RightMotor = 1;//victor and talon
   public static int LeftMotor = 0;//talon and victor
   public static int intakeMotor = 2;//sparks
+  public static int clawMotor = 3;//talon srx
   //CAN motors
-  public static int armMotor = 0;//spark max
-  public static int clawMotor = 0;//talon srx
-  public static int wristMotor = 0;//victor spx
+  public static int armMotor = 5;//spark max
+  public static int wristMotor = 2;//victor spx
   //joysticks
   public static int xboxController = 0;
   public static int logitech = 1;
