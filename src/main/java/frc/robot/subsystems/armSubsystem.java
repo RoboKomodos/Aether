@@ -15,14 +15,13 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import frc.robot.RobotMap;
-import frc.robot.constants;
 import frc.robot.commands.moveArm;
 
 
 public class armSubsystem extends PIDSubsystem {
   CANSparkMax armMotor;
   public armSubsystem() {
-    super("arm", constants.AP, constants.AI, constants.AD);
+    super("arm", 0,0,0);
     armMotor = new CANSparkMax(RobotMap.armMotor, MotorType.kBrushless);
 
   }

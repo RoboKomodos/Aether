@@ -10,7 +10,6 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
 import frc.robot.RobotMap;
-import frc.robot.constants;
 import frc.robot.commands.MoveRobot;
 
 /**
@@ -21,8 +20,7 @@ public class driveSubsystem extends PIDSubsystem {
   Victor leftDrive;
   Victor rightDrive;
   public driveSubsystem() {
-    super("drive", constants.KP, constants.KI, constants.KD);
-    getPIDController().setAbsoluteTolerance(constants.KTolerance);
+    super("drive", 0,0,0);
     leftDrive = new Victor(RobotMap.LeftMotor);
     rightDrive = new Victor(RobotMap.RightMotor);
 
