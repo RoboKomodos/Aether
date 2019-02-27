@@ -24,14 +24,23 @@ public class armSubsystem extends PIDSubsystem {
   CANSparkMax armMotor;
   CANPIDController m_pidController;
   private Double setPoint = 15.0;
+  private double P=1;
+  private double I=0;
+  private double D=0;
+  //setpoints
+  public double rocket1 = -17.87;
+  public double rocket2 = -28.54;          
   public armSubsystem() {
     super("arm", 0,0,0);
     armMotor = new CANSparkMax(RobotMap.armMotor, MotorType.kBrushless);
     m_pidController = armMotor.getPIDController();
-    m_pidController.setP(0);
-    m_pidController.setI(0);
-    m_pidController.setD(0);
+    armMotor.getEncoder().setPosition(0);
+    m_pidController.setP(P);
+    m_pidController.setI(I);
+    m_pidController.setD(D);
     m_pidController.setOutputRange(-.25, .25);
+    SmartDashboard.putNumber("ARM P",m_pidController.getP());
+    SmartDashboard.putNumber("ARM P",m_pidController.getP());
     SmartDashboard.putNumber("ARM P",m_pidController.getP());
   }
 
@@ -43,7 +52,24 @@ public class armSubsystem extends PIDSubsystem {
     }
     armMotor.set(speed);
     System.out.println(armMotor.getEncoder().getPosition());*/
-    m_pidController.setP(SmartDashboard.getNumber("ARM P",m_pidController.getP()));
+    Double p=SmartDashboard.getNumber("ARM P",P);
+    Double i=SmartDashboard.getNumber("ARM I",I);
+    Double d=SmartDashboard.getNumber("ARM D",D);
+    if(p!=P)
+    {
+      P=p;
+      m_pidController.setP(p);
+    }
+    if(i!=I)
+    {
+      I=i;
+      m_pidController.setP(p);
+    }
+    if(d!=D)
+    {
+      D=d;
+      m_pidController.setP(p);
+    }
     m_pidController.setReference(setPoint, ControlType.kPosition);
   }
 
