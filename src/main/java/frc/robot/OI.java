@@ -32,12 +32,12 @@ public class OI {
   //funtions for getting xbox values
   public double getXboxLeftY()
   {
-    double raw = xboxController.getRawAxis(1);
+    double raw = -xboxController.getRawAxis(1);
     return Math.abs(raw)<xboxDeadzone ? 0:raw;
   }
   public double getXboxLeftX()
   {
-    double raw = xboxController.getRawAxis(2);
+    double raw = xboxController.getRawAxis(0);
     return Math.abs(raw)<xboxDeadzone ? 0:raw;
   }
   public boolean isXboxLTPressed()
