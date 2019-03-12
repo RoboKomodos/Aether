@@ -13,13 +13,14 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
+import frc.robot.commands.MoveWrist;
 
 /**
  * Add your docs here.
  */
 public class wristSubsystem extends Subsystem {
   VictorSPX wristMotor = new VictorSPX(RobotMap.wristMotor);
-  public double speed = .25;
+  public double speed = 1;
 
   public wristSubsystem()
   {
@@ -36,5 +37,6 @@ public class wristSubsystem extends Subsystem {
   public void initDefaultCommand() {
     // Set the default command for a subsystem here.
     // setDefaultCommand(new MySpecialCommand());
+    setDefaultCommand(new MoveWrist());
   }
 }

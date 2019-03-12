@@ -39,6 +39,7 @@ public class armSubsystem extends PIDSubsystem {
     m_pidController.setI(I);
     m_pidController.setD(D);
     m_pidController.setOutputRange(-.25, .25);
+    SmartDashboard.putNumber("ARM Set", setPoint);
     SmartDashboard.putNumber("ARM P",m_pidController.getP());
     SmartDashboard.putNumber("ARM P",m_pidController.getP());
     SmartDashboard.putNumber("ARM P",m_pidController.getP());
@@ -73,6 +74,7 @@ public class armSubsystem extends PIDSubsystem {
       D=d;
       m_pidController.setP(p);
     }
+    setPoint = SmartDashboard.getNumber("ARM Set", setPoint);
     m_pidController.setReference(setPoint, ControlType.kPosition);
     System.out.println(setPoint);
   }

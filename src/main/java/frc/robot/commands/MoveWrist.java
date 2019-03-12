@@ -10,11 +10,11 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class MoveRobot extends Command {
-  public MoveRobot() {
+public class MoveWrist extends Command {
+  public MoveWrist() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
-    requires(Robot.m_drive);
+    requires(Robot.m_wrist);
   }
 
   // Called just before this Command runs the first time
@@ -25,7 +25,7 @@ public class MoveRobot extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.m_drive.arcadeDrive(Robot.m_oi.getXboxLeftX(), Robot.m_oi.getXboxLeftY());
+    Robot.m_wrist.set(Robot.m_oi.logitechController.getRawAxis(1));
   }
 
   // Make this return true when this Command no longer needs to run execute()

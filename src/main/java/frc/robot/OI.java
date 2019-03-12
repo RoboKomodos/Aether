@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class OI {
   Joystick xboxController = new Joystick(RobotMap.xboxController);
-  Joystick logitechController = new Joystick(RobotMap.logitech);
+  public Joystick logitechController = new Joystick(RobotMap.logitech);
   public double xboxDeadzone = .1;
   public double logitechDeadZone = .1;
   public OI()
