@@ -7,6 +7,13 @@
 
 package frc.robot;
 
+import org.opencv.core.Mat;
+
+import edu.wpi.cscore.CvSink;
+import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.VideoCamera;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -24,12 +31,28 @@ public class Robot extends TimedRobot {
   public static wristSubsystem m_wrist;
   public static intakeSubsystem m_intake;
   public static clawSubsystem m_claw;
+  VideoCamera cam1;
+  VideoCamera cam2;
+  CvSink cv1;
+  CvSink cv2;
+  CvSource outputStream;
+  Mat image = new Mat();
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
   @Override
   public void robotInit() {
+    CameraServer.getInstance();
+    cam1 = CameraServer.getInstance().startAutomaticCapture(0);
+    cam1.setResolution(640, 480);
+    cam1.setFPS(30);
+    cam2 = CameraServer.getInstance().startAutomaticCapture(1);
+    cam2.setResolution(640, 480);
+    cam2.setFPS(30);
+    cv1 = CameraServer.getInstance().getVideo(cam1);
+    cv2 = CameraServer.getInstance().getVideo(cam2);
+    outputStream = CameraServer.getInstance().putVideo("Switcher", 320, 240);
     m_oi = new OI();
     m_arm = new armSubsystem();
     m_drive = new driveSubsystem();
@@ -61,6 +84,10 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
+    cv1.setEnabled(false);
+    cv2.setEnabled(true);
+    cv2.grabFrame(image);
+    outputStream.putFrame(image);
   }
 
   /**
