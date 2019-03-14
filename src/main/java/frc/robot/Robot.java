@@ -161,6 +161,7 @@ public class Robot extends TimedRobot {
     m_claw.set(m_oi.isXboxButtonPressed(xboxMap.y)?1:m_oi.isXboxButtonPressed(xboxMap.a)?-1:0);
     m_intake.set(m_oi.isXboxButtonPressed(xboxMap.lb)?1:m_oi.isXboxButtonPressed(xboxMap.rb)?-1:0);
     m_arm.setpoint(m_oi.isXboxButtonPressed(xboxMap.x)?m_arm.rocket1:m_oi.isXboxButtonPressed(xboxMap.b)?m_arm.rocket2:m_arm.setPoint);
+    m_drive.percent = m_oi.isXboxRTPressed()?.6:1;
     if (m_oi.logitechController.getRawButton(1)&&!cameraPressed)
     {
       cameraPressed = true;
