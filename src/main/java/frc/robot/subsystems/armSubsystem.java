@@ -23,7 +23,7 @@ import frc.robot.commands.moveArm;
 public class armSubsystem extends PIDSubsystem {
   CANSparkMax armMotor;
   CANPIDController m_pidController;
-  public double setPoint = 15.0;
+  public double setPoint = 7.67;
   private double P=1;
   private double I=0;
   private double D=0;
