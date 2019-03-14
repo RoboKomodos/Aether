@@ -160,7 +160,6 @@ public class Robot extends TimedRobot {
     m_oi.periodic();
     m_claw.set(m_oi.isXboxButtonPressed(xboxMap.y)?1:m_oi.isXboxButtonPressed(xboxMap.a)?-1:0);
     m_intake.set(m_oi.isXboxButtonPressed(xboxMap.lb)?1:m_oi.isXboxButtonPressed(xboxMap.rb)?-1:0);
-    m_arm.setpoint(m_oi.isXboxButtonPressed(xboxMap.x)?m_arm.rocket1:m_oi.isXboxButtonPressed(xboxMap.b)?m_arm.rocket2:m_arm.setPoint);
     m_drive.percent = m_oi.isXboxRTPressed()?.6:1;
     if (m_oi.logitechController.getRawButton(1)&&!cameraPressed)
     {
@@ -170,6 +169,37 @@ public class Robot extends TimedRobot {
     else
     {
       cameraPressed = false;
+    }
+    if(m_oi.logitechController.getRawButton(3))
+    {
+      m_arm.setpoint(7.67);
+    }
+    else if(m_oi.logitechController.getRawButton(2))
+    {
+      m_arm.setpoint(0);
+    }
+    else if(m_oi.logitechController.getRawButton(4))
+    {
+      m_arm.setpoint(23.67);
+    }
+    else if(m_oi.logitechController.getRawButton(5))
+    {
+      m_arm.setpoint(25.89);
+    }
+    else if(m_oi.logitechController.getRawButton(5))
+    {
+      m_arm.setpoint(7.67);
+    }
+    else if(m_oi.logitechController.getRawButton(8))
+    {
+      m_arm.setpoint(16.96);
+    }
+    else if(m_oi.logitechController.getRawButton(9))
+    {
+      m_arm.setpoint(29.8);
+    }
+    else if(m_oi.logitechController.getRawButton(10));
+    {
     }
   }
 
