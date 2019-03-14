@@ -11,7 +11,6 @@ import org.opencv.core.Mat;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
-import edu.wpi.cscore.UsbCamera;
 import edu.wpi.cscore.VideoCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
@@ -22,6 +21,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.*;
 public class Robot extends TimedRobot {
   
+  private boolean cameraPressed = false;
+  private boolean selectedCamera = false;
+
   public static OI m_oi;
 
   Command m_autonomousCommand;
@@ -84,9 +86,17 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    cv1.setEnabled(false);
-    cv2.setEnabled(true);
-    cv2.grabFrame(image);
+    if(selectedCamera)
+    {
+      cv1.setEnabled(false);
+      cv2.setEnabled(true);
+      cv2.grabFrame(image);
+    }else
+    {
+      cv2.setEnabled(false);
+      cv1.setEnabled(true);
+      cv1.grabFrame(image);
+    }
     outputStream.putFrame(image);
   }
 
@@ -162,6 +172,15 @@ public class Robot extends TimedRobot {
     m_intake.set(m_oi.isXboxButtonPressed(xboxMap.lb)?1:m_oi.isXboxButtonPressed(xboxMap.rb)?-1:0);
     m_wrist.set(m_oi.logitechController.getRawButton(3)?1:m_oi.logitechController.getRawButton(2)?-1:0);
     m_arm.setpoint(m_oi.isXboxButtonPressed(xboxMap.x)?m_arm.rocket1:m_oi.isXboxButtonPressed(xboxMap.b)?m_arm.rocket2:m_arm.setPoint);
+    if (m_oi.logitechController.getRawButton(1)&&!cameraPressed)
+    {
+      cameraPressed = true;
+      selectedCamera ^= true;
+    }
+    else
+    {
+      cameraPressed = false;
+    }
   }
 
   /**
