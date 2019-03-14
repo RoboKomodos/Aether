@@ -61,19 +61,7 @@ public class Robot extends TimedRobot {
     m_wrist = new wristSubsystem();
     m_claw = new clawSubsystem();
     m_intake = new intakeSubsystem();
-    // chooser.addOption("My Auto", new MyAutoCommand());
     SmartDashboard.putData("Auto mode", m_chooser);
-    SmartDashboard.putData("Drive PID",m_drive.getPIDController());
-    /*SmartDashboard.putNumber("KP", constants.KP);
-    SmartDashboard.putNumber("KI", constants.KI);
-    SmartDashboard.putNumber("KD", constants.KD);
-    SmartDashboard.putNumber("KTolerance", constants.KTolerance);
-    SmartDashboard.putNumber("AP", constants.AP);
-    SmartDashboard.putNumber("AI", constants.AI);
-    SmartDashboard.putNumber("AD", constants.AD);
-    SmartDashboard.putNumber("ATolerance", constants.ATolerance);
-    SmartDashboard.putNumber("xbox deadzone", m_oi.xboxDeadzone);
-    SmartDashboard.putNumber("logitech deadzone", m_oi.logitechDeadZone);*/
   }
 
   /**
@@ -170,7 +158,6 @@ public class Robot extends TimedRobot {
     m_oi.periodic();
     m_claw.set(m_oi.isXboxButtonPressed(xboxMap.y)?1:m_oi.isXboxButtonPressed(xboxMap.a)?-1:0);
     m_intake.set(m_oi.isXboxButtonPressed(xboxMap.lb)?1:m_oi.isXboxButtonPressed(xboxMap.rb)?-1:0);
-    m_wrist.set(m_oi.logitechController.getRawButton(3)?1:m_oi.logitechController.getRawButton(2)?-1:0);
     m_arm.setpoint(m_oi.isXboxButtonPressed(xboxMap.x)?m_arm.rocket1:m_oi.isXboxButtonPressed(xboxMap.b)?m_arm.rocket2:m_arm.setPoint);
     if (m_oi.logitechController.getRawButton(1)&&!cameraPressed)
     {
