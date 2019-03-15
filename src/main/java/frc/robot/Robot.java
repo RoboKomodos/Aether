@@ -11,6 +11,7 @@ import org.opencv.core.Mat;
 
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
+import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.VideoCamera;
 import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.cameraserver.CameraServer;
@@ -36,9 +37,7 @@ public class Robot extends TimedRobot {
   public static clawSubsystem m_claw;
   VideoCamera cam1;
   VideoCamera cam2;
-  CvSink cv1;
-  CvSink cv2;
-  CvSource outputStream;
+  MjpegServer stream = new MjpegServer("Stream", 5808);
   Mat image = new Mat();
   /**
    * This function is run when the robot is first started up and should be
@@ -52,9 +51,6 @@ public class Robot extends TimedRobot {
     cam2 = CameraServer.getInstance().startAutomaticCapture(1);
     //cam2.setResolution(416, 240);
     //cam2.setFPS(30);
-    cv1 = CameraServer.getInstance().getVideo(cam1);
-    cv2 = CameraServer.getInstance().getVideo(cam2);
-    outputStream = CameraServer.getInstance().putVideo("Switcher",160,120);
     //CameraServer.getInstance().startAutomaticCapture();
     m_oi = new OI();
     m_arm = new armSubsystem();
@@ -75,18 +71,6 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotPeriodic() {
-    if(selectedCamera)
-    {
-      cv1.setEnabled(true);
-      cv2.setEnabled(false);
-      cv2.grabFrame(image);
-    }else
-    {
-      cv2.setEnabled(true);
-      cv1.setEnabled(false);
-      cv1.grabFrame(image);
-    }
-    outputStream.putFrame(image);
   }
 
   /**
@@ -118,7 +102,7 @@ public class Robot extends TimedRobot {
   @Override
   public void autonomousInit() {
     m_autonomousCommand = m_chooser.getSelected();
-
+    teleopInit();
     /*
      * String autoSelected = SmartDashboard.getString("Auto Selector",
      * "Default"); switch(autoSelected) { case "My Auto": autonomousCommand
@@ -169,6 +153,14 @@ public class Robot extends TimedRobot {
       if(!cameraPressed)
       {
         selectedCamera ^= true;
+        if(selectedCamera)
+        {
+          stream.setSource(cam1);
+        }
+        else
+        {
+          stream.setSource(cam2);
+        }
       }
     }
     else
