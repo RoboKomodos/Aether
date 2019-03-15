@@ -9,11 +9,8 @@ package frc.robot;
 
 import org.opencv.core.Mat;
 
-import edu.wpi.cscore.CvSink;
-import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.VideoCamera;
-import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -169,7 +166,6 @@ public class Robot extends TimedRobot {
     }
     if(m_oi.logitechController.getRawButton(3))
     {
-      System.out.println("test");
       m_arm.setpoint(9.43);
     }
     else if(m_oi.logitechController.getRawButton(2))
