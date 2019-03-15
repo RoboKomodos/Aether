@@ -186,7 +186,7 @@ public class Robot extends TimedRobot {
     }
     else if(m_oi.logitechController.getRawButton(8))
     {
-      m_arm.setpoint(15.96);
+      m_arm.setpoint(23.67);
     }
     else if(m_oi.logitechController.getRawButton(9))
     {

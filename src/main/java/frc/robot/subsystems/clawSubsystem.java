@@ -17,7 +17,7 @@ import frc.robot.RobotMap;
  */
 public class clawSubsystem extends Subsystem {
   PWMTalonSRX clawMotor = new PWMTalonSRX(RobotMap.clawMotor);
-  public double speed = .25;
+  public double speed = .5;
 
   public clawSubsystem()
   {
