@@ -74,9 +74,8 @@ public class armSubsystem extends PIDSubsystem {
       D=d;
       m_pidController.setP(p);
     }
-    setPoint = SmartDashboard.getNumber("ARM Set", setPoint);
     m_pidController.setReference(setPoint, ControlType.kPosition);
-    System.out.println(setPoint);
+    //System.out.println(setPoint);
   }
 
   @Override

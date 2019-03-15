@@ -20,17 +20,14 @@ import frc.robot.commands.MoveWrist;
  */
 public class wristSubsystem extends Subsystem {
   VictorSPX wristMotor = new VictorSPX(RobotMap.wristMotor);
-  public double speed = 1;
 
   public wristSubsystem()
   {
-    SmartDashboard.putNumber("Wrist Speed", speed);
   }
   
   public void set(double multiplier)
   {
-    speed = SmartDashboard.getNumber("Wrist Speed", speed);
-    wristMotor.set(ControlMode.PercentOutput,speed*multiplier);
+    wristMotor.set(ControlMode.PercentOutput,multiplier);
   }
 
   @Override

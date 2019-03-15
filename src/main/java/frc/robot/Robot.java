@@ -12,6 +12,7 @@ import org.opencv.core.Mat;
 import edu.wpi.cscore.CvSink;
 import edu.wpi.cscore.CvSource;
 import edu.wpi.cscore.VideoCamera;
+import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -45,16 +46,16 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void robotInit() {
-    CameraServer.getInstance();
     cam1 = CameraServer.getInstance().startAutomaticCapture(0);
-    cam1.setResolution(640, 480);
-    cam1.setFPS(30);
+    //cam1.setResolution(416, 240);
+    //cam1.setFPS(30);
     cam2 = CameraServer.getInstance().startAutomaticCapture(1);
-    cam2.setResolution(640, 480);
-    cam2.setFPS(30);
+    //cam2.setResolution(416, 240);
+    //cam2.setFPS(30);
     cv1 = CameraServer.getInstance().getVideo(cam1);
     cv2 = CameraServer.getInstance().getVideo(cam2);
-    outputStream = CameraServer.getInstance().putVideo("Switcher", 320, 240);
+    outputStream = CameraServer.getInstance().putVideo("Switcher",160,120);
+    //CameraServer.getInstance().startAutomaticCapture();
     m_oi = new OI();
     m_arm = new armSubsystem();
     m_drive = new driveSubsystem();
@@ -76,13 +77,13 @@ public class Robot extends TimedRobot {
   public void robotPeriodic() {
     if(selectedCamera)
     {
-      cv1.setEnabled(false);
-      cv2.setEnabled(true);
+      cv1.setEnabled(true);
+      cv2.setEnabled(false);
       cv2.grabFrame(image);
     }else
     {
-      cv2.setEnabled(false);
-      cv1.setEnabled(true);
+      cv2.setEnabled(true);
+      cv1.setEnabled(false);
       cv1.grabFrame(image);
     }
     outputStream.putFrame(image);
@@ -142,6 +143,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
+    m_arm.setpoint(7.67);
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -161,10 +163,13 @@ public class Robot extends TimedRobot {
     m_claw.set(m_oi.isXboxButtonPressed(xboxMap.y)?1:m_oi.isXboxButtonPressed(xboxMap.a)?-1:0);
     m_intake.set(m_oi.isXboxButtonPressed(xboxMap.lb)?1:m_oi.isXboxButtonPressed(xboxMap.rb)?-1:0);
     m_drive.percent = m_oi.isXboxRTPressed()?.6:1;
-    if (m_oi.logitechController.getRawButton(1)&&!cameraPressed)
+    if (m_oi.logitechController.getRawButton(1))
     {
       cameraPressed = true;
-      selectedCamera ^= true;
+      if(!cameraPressed)
+      {
+        selectedCamera ^= true;
+      }
     }
     else
     {
@@ -172,7 +177,8 @@ public class Robot extends TimedRobot {
     }
     if(m_oi.logitechController.getRawButton(3))
     {
-      m_arm.setpoint(7.67);
+      System.out.println("test");
+      m_arm.setpoint(9.43);
     }
     else if(m_oi.logitechController.getRawButton(2))
     {
@@ -180,23 +186,23 @@ public class Robot extends TimedRobot {
     }
     else if(m_oi.logitechController.getRawButton(4))
     {
-      m_arm.setpoint(23.67);
+      m_arm.setpoint(22.77);
     }
     else if(m_oi.logitechController.getRawButton(5))
     {
-      m_arm.setpoint(25.89);
+      m_arm.setpoint(25.0);
     }
     else if(m_oi.logitechController.getRawButton(5))
     {
-      m_arm.setpoint(7.67);
+      m_arm.setpoint(25);
     }
     else if(m_oi.logitechController.getRawButton(8))
     {
-      m_arm.setpoint(16.96);
+      m_arm.setpoint(15.96);
     }
     else if(m_oi.logitechController.getRawButton(9))
     {
-      m_arm.setpoint(29.8);
+      m_arm.setpoint(28.87);
     }
     else if(m_oi.logitechController.getRawButton(10));
     {

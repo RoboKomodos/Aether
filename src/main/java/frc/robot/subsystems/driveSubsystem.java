@@ -29,13 +29,13 @@ public class driveSubsystem extends PIDSubsystem {
 
   public void set(double left,double right)
   {
-      leftDrive.set(-left);
-      rightDrive.set(right);
+      leftDrive.set(left);
+      rightDrive.set(-right);
   }
 
   public void arcadeDrive(double x, double y)
   {
-    set(percent*(y-x), percent*(y+x));
+    set(percent*(y+x), percent*(y-x));
   }
 
   @Override
