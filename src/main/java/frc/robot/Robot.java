@@ -33,8 +33,8 @@ public class Robot extends TimedRobot {
   public static intakeSubsystem m_intake;
   public static clawSubsystem m_claw;
   VideoCamera cam1;
-  VideoCamera cam2;
-  MjpegServer stream = new MjpegServer("Stream", 5808);
+  //VideoCamera cam2;
+  //MjpegServer stream = new MjpegServer("Stream", 5808);
   Mat image = new Mat();
   /**
    * This function is run when the robot is first started up and should be
@@ -43,9 +43,9 @@ public class Robot extends TimedRobot {
   @Override
   public void robotInit() {
     cam1 = CameraServer.getInstance().startAutomaticCapture(0);
-    //cam1.setResolution(416, 240);
-    //cam1.setFPS(30);
-    cam2 = CameraServer.getInstance().startAutomaticCapture(1);
+    cam1.setResolution(200,320);
+    cam1.setFPS(30);
+    //cam2 = CameraServer.getInstance().startAutomaticCapture(1);
     //cam2.setResolution(416, 240);
     //cam2.setFPS(30);
     //CameraServer.getInstance().startAutomaticCapture();
@@ -143,7 +143,7 @@ public class Robot extends TimedRobot {
     m_oi.periodic();
     m_claw.set(m_oi.isXboxButtonPressed(xboxMap.y)?1:m_oi.isXboxButtonPressed(xboxMap.a)?-1:0);
     m_intake.set(m_oi.isXboxButtonPressed(xboxMap.lb)?1:m_oi.isXboxButtonPressed(xboxMap.rb)?-1:0);
-    m_drive.percent = m_oi.isXboxRTPressed()?.6:1;
+    m_drive.percent = m_oi.isXboxRTPressed()?.4:1;
     if (m_oi.logitechController.getRawButton(1))
     {
       cameraPressed = true;
@@ -152,11 +152,11 @@ public class Robot extends TimedRobot {
         selectedCamera ^= true;
         if(selectedCamera)
         {
-          stream.setSource(cam1);
+          //cam1 = CameraServer.getInstance().startAutomaticCapture(0);
         }
         else
         {
-          stream.setSource(cam2);
+          //cam1 = CameraServer.getInstance().startAutomaticCapture(1);
         }
       }
     }
@@ -166,7 +166,7 @@ public class Robot extends TimedRobot {
     }
     if(m_oi.logitechController.getRawButton(3))
     {
-      m_arm.setpoint(9.43);
+      m_arm.setpoint(7.67);
     }
     else if(m_oi.logitechController.getRawButton(2))
     {
@@ -182,7 +182,7 @@ public class Robot extends TimedRobot {
     }
     else if(m_oi.logitechController.getRawButton(5))
     {
-      m_arm.setpoint(25);
+      m_arm.setpoint(23.66);
     }
     else if(m_oi.logitechController.getRawButton(8))
     {

@@ -74,7 +74,7 @@ public class armSubsystem extends PIDSubsystem {
       D=d;
       m_pidController.setP(p);
     }
-    m_pidController.setReference(setPoint, ControlType.kPosition);
+    //m_pidController.setReference(setPoint, ControlType.kPosition);
     //System.out.println(setPoint);
   }
 

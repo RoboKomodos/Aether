@@ -17,7 +17,7 @@ import frc.robot.RobotMap;
  */
 public class intakeSubsystem extends Subsystem {
   Spark intakeMotor = new Spark(RobotMap.intakeMotor);
-  public double speed = .25;
+  public double speed = .35;
 
   public intakeSubsystem()
   {
@@ -27,7 +27,7 @@ public class intakeSubsystem extends Subsystem {
   public void set(double multiplier)
   {
     speed = SmartDashboard.getNumber("Intake Speed", speed);
-    intakeMotor.set(speed*multiplier);
+    intakeMotor.set(-speed*multiplier);
   }
 
   @Override
