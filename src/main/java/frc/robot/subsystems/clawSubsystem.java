@@ -17,7 +17,7 @@ import frc.robot.RobotMap;
  */
 public class clawSubsystem extends Subsystem {
   PWMTalonSRX clawMotor = new PWMTalonSRX(RobotMap.clawMotor);
-  public double speed = .75;
+  public double speed = .15;
 
   public clawSubsystem()
   {
@@ -27,7 +27,7 @@ public class clawSubsystem extends Subsystem {
   public void set(double multiplier)
   {
     speed = SmartDashboard.getNumber("Claw Speed", speed);
-    clawMotor.set(speed*multiplier);
+    clawMotor.set(-speed*multiplier);
   }
 
   @Override

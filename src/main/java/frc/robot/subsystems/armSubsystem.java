@@ -23,13 +23,10 @@ import frc.robot.commands.moveArm;
 public class armSubsystem extends PIDSubsystem {
   CANSparkMax armMotor;
   CANPIDController m_pidController;
-  public double setPoint = 7.67;
+  public double setPoint = 0;
   private double P=1;
   private double I=0;
-  private double D=0;
-  //setpoints
-  public double rocket1 = 10.8;
-  public double rocket2 = 27.13;          
+  private double D=0;         
   public armSubsystem() {
     super("arm", 0,0,0);
     armMotor = new CANSparkMax(RobotMap.armMotor, MotorType.kBrushless);
@@ -39,10 +36,9 @@ public class armSubsystem extends PIDSubsystem {
     m_pidController.setI(I);
     m_pidController.setD(D);
     m_pidController.setOutputRange(-.25, .25);
-    SmartDashboard.putNumber("ARM Set", setPoint);
     SmartDashboard.putNumber("ARM P",m_pidController.getP());
-    SmartDashboard.putNumber("ARM P",m_pidController.getP());
-    SmartDashboard.putNumber("ARM P",m_pidController.getP());
+    SmartDashboard.putNumber("ARM I",m_pidController.getP());
+    SmartDashboard.putNumber("ARM D",m_pidController.getP());
   }
   public void setpoint(double set)
   {
@@ -74,7 +70,7 @@ public class armSubsystem extends PIDSubsystem {
       D=d;
       m_pidController.setP(p);
     }
-    //m_pidController.setReference(setPoint, ControlType.kPosition);
+    m_pidController.setReference(setPoint, ControlType.kPosition);
     //System.out.println(setPoint);
   }
 

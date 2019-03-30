@@ -19,7 +19,8 @@ public class driveSubsystem extends PIDSubsystem {
   
   Victor leftDrive;
   Victor rightDrive;
-  public double percent=.5;
+  public double percent=1;
+  public double sudoPosition = 0;
   public driveSubsystem() {
     super("drive", 0,0,0);
     leftDrive = new Victor(RobotMap.LeftMotor);

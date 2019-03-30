@@ -11,6 +11,7 @@ import org.opencv.core.Mat;
 
 import edu.wpi.cscore.MjpegServer;
 import edu.wpi.cscore.VideoCamera;
+import edu.wpi.cscore.VideoSink;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
@@ -23,6 +24,13 @@ public class Robot extends TimedRobot {
   private boolean cameraPressed = false;
   private boolean selectedCamera = false;
 
+  private static boolean clawLimitPressed=false;
+
+  private static boolean mikhailPressed = false;
+  
+  public static double clawConstant =.15; 
+  public static double clawIdle=clawConstant;
+
   public static OI m_oi;
 
   Command m_autonomousCommand;
@@ -32,22 +40,28 @@ public class Robot extends TimedRobot {
   public static wristSubsystem m_wrist;
   public static intakeSubsystem m_intake;
   public static clawSubsystem m_claw;
+  public static double liftHeight=-85;
   VideoCamera cam1;
+  VideoCamera cam2;
   //VideoCamera cam2;
-  //MjpegServer stream = new MjpegServer("Stream", 5808);
-  Mat image = new Mat();
+  //VideoSink server;
+  //Mat image = new Mat();
   /**
    * This function is run when the robot is first started up and should be
    * used for any initialization code.
    */
   @Override
   public void robotInit() {
+    SmartDashboard.putNumber("lift height", liftHeight);
+    SmartDashboard.putNumber("claw constant", clawConstant);
+    //server=CameraServer.getInstance().getServer();
     cam1 = CameraServer.getInstance().startAutomaticCapture(0);
     cam1.setResolution(200,320);
     cam1.setFPS(30);
-    //cam2 = CameraServer.getInstance().startAutomaticCapture(1);
-    //cam2.setResolution(416, 240);
-    //cam2.setFPS(30);
+    cam2 = CameraServer.getInstance().startAutomaticCapture(1);
+    cam2.setResolution(200,320);
+    cam2.setFPS(30);
+    //server.setSource(cam1);
     //CameraServer.getInstance().startAutomaticCapture();
     m_oi = new OI();
     m_arm = new armSubsystem();
@@ -55,6 +69,7 @@ public class Robot extends TimedRobot {
     m_wrist = new wristSubsystem();
     m_claw = new clawSubsystem();
     m_intake = new intakeSubsystem();
+    liftHeight = SmartDashboard.getNumber("lift height", liftHeight);
     SmartDashboard.putData("Auto mode", m_chooser);
   }
 
@@ -124,7 +139,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void teleopInit() {
-    m_arm.setpoint(7.67);
+    m_arm.setpoint(0);
     // This makes sure that the autonomous stops running when
     // teleop starts running. If you want the autonomous to
     // continue until interrupted by another command, remove
@@ -139,11 +154,27 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void teleopPeriodic() {
+    clawConstant = SmartDashboard.getNumber("claw constant", clawConstant);
     Scheduler.getInstance().run();
     m_oi.periodic();
-    m_claw.set(m_oi.isXboxButtonPressed(xboxMap.y)?1:m_oi.isXboxButtonPressed(xboxMap.a)?-1:0);
+    m_claw.set(m_oi.isXboxButtonPressed(xboxMap.y)?1:m_oi.isXboxButtonPressed(xboxMap.a)?-1:clawIdle);
     m_intake.set(m_oi.isXboxButtonPressed(xboxMap.lb)?1:m_oi.isXboxButtonPressed(xboxMap.rb)?-1:0);
-    m_drive.percent = m_oi.isXboxRTPressed()?.4:1;
+    //drive percent .4
+    if (!m_oi.isXboxRTPressed())
+    {
+      mikhailPressed = false;
+    }
+    else if(!mikhailPressed)
+    {
+      mikhailPressed=true;
+      if(m_drive.percent == 1)
+      {
+        m_drive.percent = .4;
+      }
+      else{
+        m_drive.percent = 1;
+      }
+    }
     if (m_oi.logitechController.getRawButton(1))
     {
       cameraPressed = true;
@@ -152,11 +183,11 @@ public class Robot extends TimedRobot {
         selectedCamera ^= true;
         if(selectedCamera)
         {
-          //cam1 = CameraServer.getInstance().startAutomaticCapture(0);
+          //server.setSource(cam1);
         }
         else
         {
-          //cam1 = CameraServer.getInstance().startAutomaticCapture(1);
+          //server.setSource(cam2);
         }
       }
     }
@@ -164,36 +195,30 @@ public class Robot extends TimedRobot {
     {
       cameraPressed = false;
     }
-    if(m_oi.logitechController.getRawButton(3))
+
+    if(m_oi.isXboxButtonPressed(xboxMap.lb))
     {
-      m_arm.setpoint(7.67);
+      m_arm.setpoint(liftHeight);
     }
-    else if(m_oi.logitechController.getRawButton(2))
+    else if(m_oi.isXboxButtonPressed(xboxMap.rb))
     {
       m_arm.setpoint(0);
     }
-    else if(m_oi.logitechController.getRawButton(4))
+
+    if (!m_oi.isXboxLTPressed())
     {
-      m_arm.setpoint(22.77);
+      clawLimitPressed = false;
     }
-    else if(m_oi.logitechController.getRawButton(5))
+    else if(clawLimitPressed == false)
     {
-      m_arm.setpoint(25.0);
-    }
-    else if(m_oi.logitechController.getRawButton(5))
-    {
-      m_arm.setpoint(23.66);
-    }
-    else if(m_oi.logitechController.getRawButton(8))
-    {
-      m_arm.setpoint(23.67);
-    }
-    else if(m_oi.logitechController.getRawButton(9))
-    {
-      m_arm.setpoint(28.87);
-    }
-    else if(m_oi.logitechController.getRawButton(10));
-    {
+      clawLimitPressed = true;
+      if (clawIdle==0)
+      {
+        clawIdle = clawConstant;
+      }
+      else{
+        clawIdle = 0;
+      }
     }
   }
 
