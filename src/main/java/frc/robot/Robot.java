@@ -25,6 +25,7 @@ public class Robot extends TimedRobot {
   private boolean selectedCamera = false;
 
   private static boolean clawLimitPressed=false;
+  private static boolean rampedPressed = false;
 
   private static boolean mikhailPressed = false;
   
@@ -219,6 +220,15 @@ public class Robot extends TimedRobot {
       else{
         clawIdle = 0;
       }
+    }
+    if(!m_oi.isXboxButtonPressed(xboxMap.start))
+    {
+      rampedPressed = false;
+    }
+    else if(!rampedPressed)
+    {
+      rampedPressed = true;
+      m_drive.ramped ^=false;
     }
   }
 

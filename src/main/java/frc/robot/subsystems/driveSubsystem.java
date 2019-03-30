@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj.command.PIDSubsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.RobotMap;
 import frc.robot.commands.MoveRobot;
 
@@ -20,12 +21,14 @@ public class driveSubsystem extends PIDSubsystem {
   Victor leftDrive;
   Victor rightDrive;
   public double percent=1;
-  public double sudoPosition = 0;
+  public double position = 0;
+  public double increment = .01;
+  public boolean ramped = false;
   public driveSubsystem() {
     super("drive", 0,0,0);
     leftDrive = new Victor(RobotMap.LeftMotor);
     rightDrive = new Victor(RobotMap.RightMotor);
-
+    SmartDashboard.putNumber("Increment", increment);
   }
 
   public void set(double left,double right)
@@ -36,7 +39,24 @@ public class driveSubsystem extends PIDSubsystem {
 
   public void arcadeDrive(double x, double y)
   {
-    set(percent*(y+x), percent*(y-x));
+    increment = SmartDashboard.getNumber("Increment", increment);
+    if(ramped)
+    {
+      percent =1;
+    }
+    if(y == 0||percent !=1||!ramped)
+    {
+      position = y;
+    }
+    else if (y<position)
+    {
+      position = y<position-increment?position-increment:y;
+    }
+    else
+    {
+      position = y>position+increment?position+increment:y;
+    }
+    set(percent*(position+x), percent*(position-x));
   }
 
   @Override
