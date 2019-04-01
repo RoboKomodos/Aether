@@ -22,7 +22,7 @@ public class driveSubsystem extends PIDSubsystem {
   Victor rightDrive;
   public double percent=1;
   public double position = 0;
-  public double increment = .01;
+  public double increment = .05;
   public boolean ramped = false;
   public driveSubsystem() {
     super("drive", 0,0,0);

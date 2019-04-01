@@ -11,7 +11,7 @@ package frc.robot;
  * Add your docs here.
  */
 public enum xboxMap {
-    lb(5),rb(6),x(3),y(4),a(1),b(2),rightJoystick(10),leftJoystick(9),start(7),select(6);
+    lb(5),rb(6),x(3),y(4),a(1),b(2),rightJoystick(10),leftJoystick(9),start(8),select(6);
     public int value;
     private xboxMap(int v)
     {

@@ -221,15 +221,12 @@ public class Robot extends TimedRobot {
         clawIdle = 0;
       }
     }
-    if(!m_oi.isXboxButtonPressed(xboxMap.start))
-    {
-      rampedPressed = false;
-    }
-    else if(!rampedPressed)
+    if(m_oi.xboxController.getRawButtonPressed(8))
     {
       rampedPressed = true;
-      m_drive.ramped ^=false;
+      m_drive.ramped ^=true;
     }
+    System.out.println(m_drive.ramped);
   }
 
   /**
